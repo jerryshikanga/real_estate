@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<!-- banner -->
+<div class="inside-banner">
+  <div class="container">
+    <span class="pull-right"><a href="#">Home</a> / Login</span>
+    <h2>Login</h2>
+</div>
+</div>
+<!-- banner -->
+
+
+<div class="container">
+    <div class="spacer">
+        <div class="row register">
+            <div class="col-lg-6 col-lg-offset-3 col-sm-6 col-sm-offset-3 col-xs-12 ">
+                {% if form.errors %}
+                    <div class="text-danger">
+                        <p>Your username and password didn't match. Please try again.</p>
+                    </div>
+                {% endif %}
+                {% if next %}
+                    {% if user.is_authenticated %}
+                        <div class="text-danger">
+                            <p>Your account doesn't have access to this page. To proceed,  please login with an account that has access.</p>
+                        </div>
+                    {% else %}
+                        <div class="text-warning">
+                            <p>Please login to see this page.</p>
+                        </div>
+                    {% endif %}
+                {% endif %}
+                <form method="post" action="{% url 'login' %}" role="form" class="">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ form.username.label_tag }}
+                        {{ form.username }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.password.label_tag }}
+                        {{ form.password }}
+                    </div>
+                    <button type="submit" class="btn btn-success">Login</button>
+                    <input type="hidden" name="next" value="{{ next }}" />
+                </form>
+                {# Assumes you setup the password_reset view in your URLconf #}
+                <p>
+                    <a href="{% url 'password_reset' %}">Lost password?</a>
+                    <a href="{% url 'agent:create' %}" class="pull-right">Don't  have an account?</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="{% static 'assets/js/form_script.js' %}"></script>
+{% endblock %}

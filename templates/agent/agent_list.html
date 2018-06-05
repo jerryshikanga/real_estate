@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- banner -->
+<div class="inside-banner">
+  <div class="container">
+    <span class="pull-right"><a href="#">Home</a> / Agents</span>
+    <h2>Agents</h2>
+</div>
+</div>
+<!-- banner -->
+
+
+<div class="container">
+<div class="spacer agents">
+
+<div class="row">
+  <div class="col-lg-8  col-lg-offset-2 col-sm-12">
+
+      {% for agent in agent_list %}
+          {#      agent item#}
+          <div class="row">
+            <div class="col-lg-2 col-sm-2 "><a href="#"><img src="{{ MEDIA_URL }}{{ agent.picture }}" class="img-responsive" alt="{{ agent.user.get_full_name }}"></a></div>
+            <div class="col-lg-7 col-sm-7 "><h4>{{ agent.user.get_full_name }}</h4><p>{{ agent.description }}</p></div>
+            <div class="col-lg-3 col-sm-3 "><span class="glyphicon glyphicon-envelope"></span> <a href="mailto:{{ agent.user.email }}">{{ agent.user.email }}</a><br>
+            <span class="glyphicon glyphicon-earphone"></span> {{ agent.telephone }}</div>
+        </div>
+          {#      end of agent item#}
+      {% endfor %}
+
+
+  </div>
+</div>
+
+
+</div>
+</div>
+
+{% endblock %}

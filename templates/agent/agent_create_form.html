@@ -4,8 +4,8 @@
 <!-- banner -->
 <div class="inside-banner">
   <div class="container">
-    <span class="pull-right"><a href="#">Home</a> / Property/ Create</span>
-    <h2>Add a property</h2>
+    <span class="pull-right"><a href="#">Home</a> / Register</span>
+    <h2>Register</h2>
 </div>
 </div>
 <!-- banner -->
@@ -15,14 +15,18 @@
     <div class="spacer">
         <div class="row register">
             <div class="col-lg-6 col-lg-offset-3 col-sm-6 col-sm-offset-3 col-xs-12 ">
-
                 <form method="post" action="" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit" value="submit" class="btn btn-success">Submit</button>
-                    <button type="reset" value="Reset" class="btn btn-info"> Reset </button>
+                    <button type="submit" class="btn btn-success">Register</button>
+                    <button type="reset" class="btn btn-default">Reset</button>
                 </form>
 
+                {# Assumes you setup the password_reset view in your URLconf #}
+                <p>
+                    <a href="{% url 'password_reset' %}">Lost password?</a>
+                    <a href="{% url 'login' %}" class="pull-right">Have an account?</a>
+                </p>
             </div>
         </div>
     </div>

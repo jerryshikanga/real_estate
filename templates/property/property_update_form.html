@@ -1,8 +1,31 @@
-<h3> Update Property Details</h3>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<!-- banner -->
+<div class="inside-banner">
+  <div class="container">
+    <span class="pull-right"><a href="#">Home</a> / Property/ Edit</span>
+    <h2>Edit property {{ property.name }}</h2>
+</div>
+</div>
+<!-- banner -->
 
-<form method="post" action="">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" value="submit">Submit</button>
-    <button type="reset" value="Reset"> Reset </button>
-</form>
+
+<div class="container">
+    <div class="spacer">
+        <div class="row register">
+            <div class="col-lg-6 col-lg-offset-3 col-sm-6 col-sm-offset-3 col-xs-12 ">
+
+                <form method="post" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" value="submit" class="btn btn-success">Submit</button>
+                    <button type="reset" value="Reset" class="btn btn-info"> Reset </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="{% static 'assets/js/form_script.js' %}"></script>
+{% endblock %}

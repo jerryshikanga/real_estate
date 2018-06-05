@@ -1,3 +1,138 @@
-{% for property in property_list %}
-    {{ property }}
-{% endfor %}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- banner -->
+<div class="inside-banner">
+  <div class="container">
+    <span class="pull-right"><a href="index.php">Home</a> / Buy, Sale & Rent</span>
+    <h2>Buy, Sale & Rent</h2>
+</div>
+</div>
+<!-- banner -->
+
+
+<div class="container">
+<div class="properties-listing spacer">
+
+<div class="row">
+<div class="col-lg-3 col-sm-4 ">
+
+  <div class="search-form"><h4><span class="glyphicon glyphicon-search"></span> Search for</h4>
+    <form method="get" action="{% url 'property:list' %}">
+            <input type="text" class="form-control" placeholder="Search of Properties" name="name">
+    <div class="row">
+            <div class="col-lg-5">
+              <select class="form-control" name="min">
+                  <option value=""></option>
+                  <option value="0">$0</option>
+                <option value="10000">$10, 000</option>
+                <option value="50000">$50,000</option>
+                <option value="100000">$100,000</option>
+              </select>
+            </div>
+            <div class="col-lg-7">
+              <select class="form-control" name="max">
+                <option value=""></option>
+                <option value="100000">$100, 000</option>
+                <option value="500000">$500, 000</option>
+                <option value="1000000">$1, 000,000</option>
+                <option value="">Above 1, 000, 000</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+          <div class="col-lg-12">
+              <select class="form-control" name="property_type">
+                  {% for type in property_type_list %}
+                      <option value="{{ type.id }}">{{ type.name }}</option>
+                  {% endfor %}
+              </select>
+              </div>
+          </div>
+          <button class="btn btn-primary" type="submit">Find Now</button>
+
+    </form>
+  </div>
+
+    <div class="hot-properties hidden-xs">
+        <h4>Hot Properties</h4>
+{#        hot property list#}
+        {% for property in hot_property_list %}
+            <div class="row">
+                <div class="col-lg-4 col-sm-5">
+                    <img src="{{ MEDIA_URL }}{{ property.picture_1 }}" class="img-responsive img-circle" alt="properties">
+                </div>
+                <div class="col-lg-8 col-sm-7">
+                <h5><a href="{% url 'property:detail' property.id %}">{{ property.name }}</a></h5>
+                <p class="price">${{ property.price }}</p> </div>
+            </div>
+        {% endfor %}
+
+{#        end hot property list#}
+
+    </div>
+
+
+</div>
+
+<div class="col-lg-9 col-sm-8">
+<div class="sortby clearfix">
+{#<div class="pull-left result">Showing: 12 of 100 </div>#}
+  <div class="pull-right">
+  <select class="form-control">
+  <option>Sort by</option>
+  <option>Price: Low to High</option>
+  <option>Price: High to Low</option>
+</select></div>
+
+</div>
+<div class="row">
+
+    {#    individual property#}
+    {% for property in property_list %}
+        <div class="col-lg-4 col-sm-6">
+        <div class="properties">
+            <div class="image-holder"><img src="{{ MEDIA_URL }}{{ property.picture_1 }}" class="img-responsive" alt="{{ property.name }}">
+                <div class="status sold">
+                    {% if property.availability %}
+                        Available
+                    {% else %}
+                        Sold
+                    {% endif %}
+                </div>
+            </div>
+        <h4><a href="{% url 'property:detail' property.id %}">{{ property.name }}</a></h4>
+        <p class="price">Price: {{ property.price }}</p>
+        <div class="listing-detail">
+            <span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">{{ property.bedrooms }}</span>
+            <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">{{ property.living_rooms }}</span>
+            <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">{{ property.parking }}</span>
+            <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">{{ property.kitchens }}</span>
+        </div>
+        <a class="btn btn-primary" href="{% url 'property:detail' property.id %}">View Details</a>
+      </div>
+      </div>
+    {% endfor %}
+    {#    end of individual property#}
+
+
+      <div class="center">
+        <ul class="pagination">
+          <li><a href="#">«</a></li>
+          <li><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="#">5</a></li>
+          <li><a href="#">»</a></li>
+        </ul>
+    </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

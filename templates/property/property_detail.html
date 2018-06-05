@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- banner -->
+<div class="inside-banner">
+  <div class="container">
+    <span class="pull-right"><a href="#">Home</a> / Buy</span>
+    <h2>Buy</h2>
+</div>
+</div>
+<!-- banner -->
+
+
+<div class="container">
+<div class="properties-listing spacer">
+
+<div class="row">
+<div class="col-lg-3 col-sm-4 hidden-xs">
+
+<div class="hot-properties hidden-xs">
+<h4>Hot Properties</h4>
+    {% for property in hot_property_list %}
+        <div class="row">
+            <div class="col-lg-4 col-sm-5">
+                <img src="{{ MEDIA_URL }}{{ property.picture_1 }}" class="img-responsive img-circle" alt="{{ property.name }}"/>
+            </div>
+            <div class="col-lg-8 col-sm-7">
+                <h5><a href="{% url 'property:detail' property.id %}">{{ property.name }}</a></h5>
+                <p class="price">${{ property.price }}</p>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+
+
+</div>
+
+<div class="col-lg-9 col-sm-8 ">
+
+<h2>{{ property.name }}</h2>
+<div class="row">
+  <div class="col-lg-8">
+  <div class="property-images">
+    <!-- Slider Starts -->
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators hidden-xs">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1" class=""></li>
+        <li data-target="#myCarousel" data-slide-to="2" class=""></li>
+        <li data-target="#myCarousel" data-slide-to="3" class=""></li>
+      </ol>
+      <div class="carousel-inner">
+        <!-- Item 1 -->
+        <div class="item active">
+          <img src="{{ MEDIA_URL }}{{ property.picture_1 }}" class="properties" alt="{{ property.name }}" />
+        </div>
+        <!-- #Item 1 -->
+
+        <!-- Item 2 -->
+        <div class="item">
+          <img src="{{ MEDIA_URL }}{{ property.picture_2 }}" class="properties" alt="{{ property.name }}" />
+
+        </div>
+        <!-- #Item 2 -->
+
+        <!-- Item 3 -->
+         <div class="item">
+          <img src="{{ MEDIA_URL }}{{ property.picture_3 }}" class="properties" alt="{{ property.name }}" />
+        </div>
+        <!-- #Item 3 -->
+
+        <!-- Item 4 -->
+        <div class="item ">
+          <img src="{{ MEDIA_URL }}{{ property.picture_4 }}" class="properties" alt="{{ property.name }}" />
+
+        </div>
+        <!-- # Item 4 -->
+      </div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    </div>
+<!-- #Slider Ends -->
+
+  </div>
+
+
+
+
+  <div class="spacer"><h4><span class="glyphicon glyphicon-th-list"></span> Properties Detail</h4>
+   <p> {{ property.description }} </p>
+
+  </div>
+
+  </div>
+  <div class="col-lg-4">
+  <div class="col-lg-12  col-sm-6">
+    <div class="property-info">
+        <p class="price">
+            $ {{ property.price }}
+            {% if request.user.is_authenticated %}
+                {% if request.user == property.agent.user %}
+                    <a href="{% url 'property:update' property.id %}" class="btn btn-info">Edit property</a>
+                {% endif %}
+            {% endif %}
+        </p>
+        <p class="area"><span class="glyphicon glyphicon-map-marker"></span> {{ property.location }}</p>
+
+        <div class="profile">
+            <span class="glyphicon glyphicon-user"></span> Agent Details
+            <p>{{ property.agent.user.get_full_name }}<br>{{ property.agent.telephone }}</p>
+        </div>
+    </div>
+
+    <h6><span class="glyphicon glyphicon-home"></span> Availabilty</h6>
+    <div class="listing-detail">
+    <span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">5</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">1</span> </div>
+
+  </div>
+<div class="col-lg-12 col-sm-6 ">
+<div class="enquiry">
+  <h6><span class="glyphicon glyphicon-envelope"></span> Post Enquiry</h6>
+  <form role="form" action="{% url 'property:enquiry_new' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="property" value="{{ property.id }}" />
+      <input type="text" class="form-control" placeholder="Full Name" name="name" required=""/>
+      <input type="email" class="form-control" placeholder="you@yourdomain.com" name="email" required=""/>
+      <input type="text" class="form-control" placeholder="your number" name="telephone" required=""/>
+      <textarea rows="6" class="form-control" placeholder="Whats on your mind?" name="message" required=""></textarea>
+      <button type="submit" class="btn btn-primary" name="Submit">Send Message</button>
+      </form>
+ </div>
+</div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

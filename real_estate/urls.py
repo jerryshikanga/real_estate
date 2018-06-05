@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
+from django.conf import settings
 from . import views
 
 urlpatterns = [
@@ -26,4 +28,11 @@ urlpatterns = [
     path('blog.html', views.blog, name='blog_page'),
 
     path('property/', include('property.urls')),
+    path('agent/', include('agent.urls')),
+
+    # for auth views
+    path('auth/', include('django.contrib.auth.urls')),
 ]
+
+# for serving media documents
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
