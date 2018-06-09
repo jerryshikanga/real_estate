@@ -89,8 +89,14 @@
 
 
 
-  <div class="spacer"><h4><span class="glyphicon glyphicon-th-list"></span> Properties Detail</h4>
-   <p> {{ property.description }} </p>
+  <div class="spacer">
+      <h4> <span class="glyphicon glyphicon-th-list"></span> Properties Detail </h4>
+      {% if property.availability %}
+          <span class="text-success">Available</span>
+      {% else %}
+          <span class="text-warning">{{ property.sale_type }} Out</span>
+      {% endif %}
+      <p> {{ property.description }} </p>
 
   </div>
 
@@ -102,9 +108,11 @@
             $ {{ property.price }}
             {% if request.user.is_authenticated %}
                 {% if request.user == property.agent.user %}
-                    <a href="{% url 'property:update' property.id %}" class="btn btn-info">Edit property</a>
+                    <button class="btn btn-default"><a href="{% url 'property:update' property.id %}" class="btn btn-info">Edit property</a></button>
                 {% endif %}
+                    <button class="btn btn-default"><a href="{% url 'booking:booking_selected' property.id %}">Book Property</a></button>
             {% endif %}
+
         </p>
         <p class="area"><span class="glyphicon glyphicon-map-marker"></span> {{ property.location }}</p>
 

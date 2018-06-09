@@ -1,1 +1,18 @@
-Agent created successfully
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+    <div class="row panel">
+        <div class="panel-heading">
+            <h3 class="text-success">Success</h3>
+        </div>
+        <div class="panel-body">
+            <h4>
+                Your profile has been registred successfully! <a href="{% url 'property:list' %}">Click here to view or add  properties</a>
+            </h4>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}

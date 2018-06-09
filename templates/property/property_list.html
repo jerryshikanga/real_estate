@@ -5,7 +5,7 @@
 <!-- banner -->
 <div class="inside-banner">
   <div class="container">
-    <span class="pull-right"><a href="index.php">Home</a> / Buy, Sale & Rent</span>
+    <span class="pull-right"><a href="#">Home</a> / Buy, Sale & Rent</span>
     <h2>Buy, Sale & Rent</h2>
 </div>
 </div>
@@ -17,35 +17,27 @@
 
 <div class="row">
 <div class="col-lg-3 col-sm-4 ">
-
+    {% if request.user.is_authenticated %}
+        <div style="padding: 20px">
+        <button class="btn btn-default"><a href="{% url 'property:create' %}">Register Property</a></button>
+        </div>
+    {% endif %}
   <div class="search-form"><h4><span class="glyphicon glyphicon-search"></span> Search for</h4>
     <form method="get" action="{% url 'property:list' %}">
-            <input type="text" class="form-control" placeholder="Search of Properties" name="name">
+            <input type="text" class="form-control" placeholder="Name of Properties" name="name">
     <div class="row">
-            <div class="col-lg-5">
-              <select class="form-control" name="min">
-                  <option value=""></option>
-                  <option value="0">$0</option>
-                <option value="10000">$10, 000</option>
-                <option value="50000">$50,000</option>
-                <option value="100000">$100,000</option>
-              </select>
+            <div class="col-lg-6">
+              <input type="number" class="form-control" placeholder="Minimum" name="min"/>
             </div>
-            <div class="col-lg-7">
-              <select class="form-control" name="max">
-                <option value=""></option>
-                <option value="100000">$100, 000</option>
-                <option value="500000">$500, 000</option>
-                <option value="1000000">$1, 000,000</option>
-                <option value="">Above 1, 000, 000</option>
-              </select>
+            <div class="col-lg-6">
+              <input type="number" class="form-control" placeholder="Maximum" name="max">
             </div>
           </div>
 
           <div class="row">
           <div class="col-lg-12">
-              <select class="form-control" name="property_type">
-                  {% for type in property_type_list %}
+              <select class="form-control" name="building_type">
+                  {% for type in property_building_type_list  %}
                       <option value="{{ type.id }}">{{ type.name }}</option>
                   {% endfor %}
               </select>
@@ -54,6 +46,7 @@
           <button class="btn btn-primary" type="submit">Find Now</button>
 
     </form>
+
   </div>
 
     <div class="hot-properties hidden-xs">
@@ -116,19 +109,6 @@
       </div>
     {% endfor %}
     {#    end of individual property#}
-
-
-      <div class="center">
-        <ul class="pagination">
-          <li><a href="#">«</a></li>
-          <li><a href="#">1</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
-          <li><a href="#">4</a></li>
-          <li><a href="#">5</a></li>
-          <li><a href="#">»</a></li>
-        </ul>
-    </div>
 
 </div>
 </div>

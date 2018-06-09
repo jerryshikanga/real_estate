@@ -1,5 +1,5 @@
 from django.conf import settings
-from  property.models import PropertyType
+from  property.models import BuildingType, SaleType
 
 
 def site_details(request):
@@ -12,6 +12,7 @@ def site_details(request):
     context_data['custom_site_address'] = '116, Juja, Kenya'
 
     # context_data['MEDIA_URL'] = settings.MEDIA_URL
-    context_data['property_type_list'] = PropertyType.objects.all()
+    context_data['property_sale_type_list'] = SaleType.objects.all()
+    context_data['property_building_type_list'] = BuildingType.objects.all()
 
     return context_data

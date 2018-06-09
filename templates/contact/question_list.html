@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<!-- banner -->
+<div class="inside-banner">
+  <div class="container">
+    <span class="pull-right"><a href="#">Home</a> / Contact</span>
+    <h2>Contact Queries</h2>
+</div>
+</div>
+<!-- banner -->
+
+
+<div class="container">
+    <div class="spacer">
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                </thead>
+                {% for question in question_list %}
+                    <tr>
+                        <td>{{ question.name }}</td>
+                        <td>{{ question.email }}</td>
+                        <td>{{ question.subject }}</td>
+                    </tr>
+                {% endfor %}
+
+                <thead>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+    <script src="{% static 'assets/js/form_script.js' %}"></script>
+{% endblock %}

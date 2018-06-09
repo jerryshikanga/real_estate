@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView
-from django.views.generic import ListView, DetailView, DeleteView
+from django.views.generic import ListView, DetailView, DeleteView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Property, PropertyEnquiry
 from django.urls import reverse_lazy
+from agent.models import Agent
+from django.shortcuts import redirect
+from .forms import EnquiryForm
 
 
 # Create your views here.
@@ -16,9 +19,16 @@ class PropertyCreateView(LoginRequiredMixin, CreateView):
     template_name_suffix = '_create_form'
     model = Property
     fields = (
-    'price', 'description', 'location', 'property_type', 'sale_type', 'bedrooms', 'kitchens', 'living_rooms', 'parking', \
-    'picture_1', 'picture_2', 'picture_3', 'picture_4')
-    success_url = reverse_lazy('property:success_create')
+        'name', 'price', 'location', 'description', 'building_type', 'sale_type', 'bedrooms', 'kitchens',
+        'living_rooms', 'parking', \
+        'picture_1', 'picture_2', 'picture_3', 'picture_4')
+
+    def form_valid(self, form):
+        agent = Agent.objects.get(user=self.request.user)
+        self.object = form.save()
+        self.object.agent = agent
+        self.object.save()
+        return redirect(reverse_lazy("property:detail", kwargs={'pk':self.object.id}))
 
 
 class PropertyDeleteView(DeleteView):
@@ -29,9 +39,10 @@ class PropertyUpdateView(UpdateView):
     template_name_suffix = '_update_form'
     model = Property
     fields = (
-    'price', 'description', 'location', 'property_type', 'sale_type', 'bedrooms', 'kitchens', 'living_rooms', 'parking', \
-    'picture_1', 'picture_2', 'picture_3', 'picture_4')
-    success_url = reverse_lazy('property:success_update')
+        'name', 'price', 'description', 'location', 'building_type', 'sale_type', 'bedrooms', 'kitchens',
+        'living_rooms', 'parking', \
+        'picture_1', 'picture_2', 'picture_3', 'picture_4')
+    # success_url = reverse_lazy('property:success_update')
 
 
 class PropertyDetailView(DetailView):
@@ -49,7 +60,8 @@ class PropertyListView(ListView):
 
     def get_queryset(self):
         name = self.request.GET.get("name")
-        property_type = self.request.GET.get("property_type")
+        building_type = self.request.GET.get("building_type")
+        sale_type = self.request.GET.get("sale_type")
         min_price = self.request.GET.get("min")
         max_price = self.request.GET.get("max")
 
@@ -57,8 +69,10 @@ class PropertyListView(ListView):
 
         if name is not None:
             property_list = property_list.filter(name__icontains=name)
-        if property_type is not None:
-            property_list = property_list.filter(property_type=property_type)
+        if sale_type is not None :
+            property_list = property_list.filter(sale_type=sale_type)
+        if building_type is not None:
+            property_list = property_list.filter(property_type=building_type)
         if min_price is not None and min_price is not "":
             property_list = property_list.filter(price__gte=float(min_price))
         if max_price is not None and max_price is not "":
@@ -68,23 +82,18 @@ class PropertyListView(ListView):
     model = Property
 
 
-class NewEnquiryView(CreateView):
+class NewEnquiryView(LoginRequiredMixin, FormView):
+    form_class = EnquiryForm
+    template_name = 'property/propertyenquiry_form.html'
+
+    def get_success_url(self):
+        return reverse_lazy('property:detail', kwargs={'pk':self.kwargs['property_id']})
+
+    def form_valid(self, form):
+        property = Property.objects.get(pk=self.kwargs['property_id'])
+        form.save_inquiry(self.request.user, property=property)
+        return super(NewEnquiryView, self).form_valid(form)
+
+
+class InquiryDetail(DetailView) :
     model = PropertyEnquiry
-    fields = ('property', 'name', 'email', 'telephone', 'message')
-    success_url = reverse_lazy('property:success_query')
-
-
-def success_create(request):
-    return render(request, 'property/success_create.html')
-
-
-def success_update(request):
-    return render(request, 'property/success_update.html')
-
-
-def success_inquiry(request):
-    return render(request, 'property/success_inquiry.html')
-
-
-def success_delete(request):
-    return render(request, 'property/success_delete.html')

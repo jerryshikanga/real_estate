@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<!-- banner -->
+<div class="inside-banner">
+  <div class="container">
+    <span class="pull-right"><a href="#">Home</a> / Booking</span>
+    <h2>Booked Properties</h2>
+</div>
+</div>
+<!-- banner -->
+
+
+<div class="container">
+    <div class="spacer">
+        <div class="row">
+     <table class="table table-striped">
+    <thead>
+        <td>Property</td>
+        <td>User</td>
+        <td>Date</td>
+    </thead>
+    {% for booking in booking_list %}
+     <tr>
+        <td>{{ booking.property.name }}</td>
+        <td>{{ booking.user.get_full_name }}</td>
+        <td>{{ booking.time_booking }}</td>
+    </tr>
+    {% endfor %}
+    <thead>
+        <td>Property</td>
+        <td>User</td>
+        <td>Date</td>
+    </thead>
+</table>
+        </div>
+    </div>
+</div>
+    <script src="{% static 'assets/js/form_script.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% if agent.user == request.user %}
+    <a href="{% url 'agent:update' agent.id %}">Update yor details</a>
+{% endif %}
+
+<br>
+Name : {{ agent.user.get_full_name }}
+<br>
+Email : {{ agent.user.email }}
+<br>
+Telephone : {{ agent.telephone }}
+<br>
+
+<img src="{{ MEDIA_URL }}{{ agent.picture }}" alt="{{ agent }}" width="20%" height="auto"/>
+<br>
+
+<a href="{% url 'agent:list' %}">Click here to go back to agent list</a>
+

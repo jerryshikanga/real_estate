@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<!-- banner -->
+<div class="inside-banner">
+  <div class="container">
+    <span class="pull-right"><a href="#">Home</a> / Property/ Enquiry</span>
+    <h2>Enquiry Details</h2>
+</div>
+</div>
+<!-- banner -->
+
+
+<div class="container">
+    <div class="spacer">
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <td>Property</td>
+                    <td></td>
+                </thead>
+                <tr>
+                    <td>{{ propertyenquiry.property }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+    <script src="{% static 'assets/js/form_script.js' %}"></script>
+{% endblock %}

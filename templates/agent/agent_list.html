@@ -22,7 +22,10 @@
           {#      agent item#}
           <div class="row">
             <div class="col-lg-2 col-sm-2 "><a href="#"><img src="{{ MEDIA_URL }}{{ agent.picture }}" class="img-responsive" alt="{{ agent.user.get_full_name }}"></a></div>
-            <div class="col-lg-7 col-sm-7 "><h4>{{ agent.user.get_full_name }}</h4><p>{{ agent.description }}</p></div>
+            <div class="col-lg-7 col-sm-7 ">
+                <h4><a href="{% url 'agent:detail' agent.pk %}">{{ agent.user.get_full_name }}</a> </h4>
+                <p>{{ agent.description }}</p>
+            </div>
             <div class="col-lg-3 col-sm-3 "><span class="glyphicon glyphicon-envelope"></span> <a href="mailto:{{ agent.user.email }}">{{ agent.user.email }}</a><br>
             <span class="glyphicon glyphicon-earphone"></span> {{ agent.telephone }}</div>
         </div>

@@ -56,11 +56,16 @@
             <!-- Nav Starts -->
             <div class="navbar-collapse  collapse">
               <ul class="nav navbar-nav navbar-right">
-               <li class="active"><a href="{% url 'index_page' %}">Home</a></li>
+               <li><a href="{% url 'index_page' %}">Home</a></li>
                 <li><a href="{% url 'about_page' %}">About</a></li>
                 <li><a href="{% url 'agent:list' %}">Agents</a></li>
                 <li><a href="{% url 'blog_page' %}">Blog</a></li>
-                <li><a href="{% url 'contact_page' %}">Contact</a></li>
+                <li><a href="{% url 'contact:contact_page' %}">Contact</a></li>
+                  {% if request.user.is_authenticated %}
+                      <li> <a href="{% url 'logout' %}">{{ request.user.get_full_name }} Logout</a> </li>
+                  {% else %}
+                      <li> <a href="{% url 'login' %}">Login</a> </li>
+                  {% endif %}
               </ul>
             </div>
             <!-- #Nav Ends -->
@@ -82,9 +87,9 @@
 <a href="{% url 'index_page' %}"><img src="{% static '/' %}images/logo.png" alt="{{ custom_site_name }}"></a>
 
               <ul class="pull-right">
-                <li><a href="#">Buy</a></li>
-                <li><a href="#">Sale</a></li>
-                <li><a href="#">Rent</a></li>
+                  {% for type in property_sale_type_list %}
+                      <li><a href="{% url 'property:list' %}?sale_type={{ type.id }}">{{ type }}</a></li>
+                  {% endfor %}
               </ul>
 </div>
 <!-- #Header Starts -->
@@ -109,7 +114,7 @@
                 <li class="col-lg-12 col-sm-12 col-xs-3"><a href="{% url 'about_page' %}">About</a></li>
                 <li class="col-lg-12 col-sm-12 col-xs-3"><a href="{% url 'agent:list' %}">Agents</a></li>
                 <li class="col-lg-12 col-sm-12 col-xs-3"><a href="{% url 'blog_page' %}">Blog</a></li>
-                <li class="col-lg-12 col-sm-12 col-xs-3"><a href="{% url 'contact_page' %}">Contact</a></li>
+                <li class="col-lg-12 col-sm-12 col-xs-3"><a href="{% url 'contact:contact_page' %}">Contact</a></li>
               </ul>
             </div>
 
