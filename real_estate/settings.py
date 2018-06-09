@@ -24,11 +24,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'k+m5nok#fy%f!++@81+1eiewvodskj=b4_*p)s_ep(n+mn#19k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost',
-    '192.168.122.1',
     'shikanga.pythonanywhere.com'
 ]
 
