@@ -15,4 +15,6 @@ def site_details(request):
     context_data['property_sale_type_list'] = SaleType.objects.all()
     context_data['property_building_type_list'] = BuildingType.objects.all()
 
+    context_data['MEDIA_URL'] = settings.MEDIA_URL
+
     return context_data

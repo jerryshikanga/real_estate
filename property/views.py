@@ -72,7 +72,7 @@ class PropertyListView(ListView):
         if sale_type is not None :
             property_list = property_list.filter(sale_type=sale_type)
         if building_type is not None:
-            property_list = property_list.filter(property_type=building_type)
+            property_list = property_list.filter(building_type=building_type)
         if min_price is not None and min_price is not "":
             property_list = property_list.filter(price__gte=float(min_price))
         if max_price is not None and max_price is not "":
